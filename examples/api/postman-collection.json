@@ -1,0 +1,332 @@
+{
+  "info": {
+    "name": "BayEngage AgentKit",
+    "description": "Complete API collection for BayEngage AgentKit interactions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "bayengage-agentkit-2025",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "thread_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Check server health and see available agents"
+      }
+    },
+    {
+      "name": "Contact Management",
+      "item": [
+        {
+          "name": "List Segments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has success field\", function() {",
+                  "    pm.expect(pm.response.json()).to.have.property('success');",
+                  "});",
+                  "",
+                  "if (pm.response.json().thread_id) {",
+                  "    pm.collectionVariables.set('thread_id', pm.response.json().thread_id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"List all my campaign segments\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "List all available campaign segments"
+          }
+        },
+        {
+          "name": "Create Contact",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Create a contact with email demo@example.com, first name Demo, last name User, and tag them as test\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Create a new contact"
+          }
+        },
+        {
+          "name": "Get Contact",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Get contact information for demo@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Retrieve contact information"
+          }
+        },
+        {
+          "name": "Update Contact",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Update contact demo@example.com with phone number 555-1234 and add tag vip\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Update contact information"
+          }
+        },
+        {
+          "name": "Delete Contact",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Delete contact demo@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Delete a contact (requires confirmation)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "Create Campaign",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Create a campaign named 'Test Campaign' with subject 'Hello World' using template welcome_1 for segment active_customers\",\n  \"agent\": \"campaign_manager\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Create a campaign draft"
+          }
+        },
+        {
+          "name": "List Campaigns",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Show me all my campaigns\",\n  \"agent\": \"campaign_manager\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "List all campaigns"
+          }
+        },
+        {
+          "name": "Get Campaign Stats",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Show me stats for campaign camp_12345\",\n  \"agent\": \"data_analyst\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Get campaign analytics"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automation",
+      "item": [
+        {
+          "name": "Create Drip Campaign",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Create a welcome drip campaign with 3 emails: Day 0 welcome, Day 2 product tour, Day 5 special offer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Create automated email sequence"
+          }
+        },
+        {
+          "name": "Create A/B Test",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Create an A/B test for subject lines: 'Last Chance' vs 'Don't Miss Out', test 20% of audience based on open rate\",\n  \"agent\": \"campaign_manager\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Create A/B test campaign"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Campaign Performance",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"What are my best performing campaigns this month?\",\n  \"agent\": \"data_analyst\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Get performance insights"
+          }
+        },
+        {
+          "name": "Analyze Campaign",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Analyze campaign camp_12345 and give me recommendations\",\n  \"agent\": \"data_analyst\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Get AI-powered campaign analysis"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conversation Threading",
+      "item": [
+        {
+          "name": "Step 1: Create Campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.json().thread_id) {",
+                  "    pm.collectionVariables.set('thread_id', pm.response.json().thread_id);",
+                  "    console.log('Thread ID saved:', pm.response.json().thread_id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Create a campaign named Test Campaign\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "First message in conversation"
+          }
+        },
+        {
+          "name": "Step 2: Follow-up",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"Change the subject to Welcome Email\",\n  \"thread_id\": \"{{thread_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Follow-up message using thread_id"
+          }
+        }
+      ]
+    }
+  ]
+}

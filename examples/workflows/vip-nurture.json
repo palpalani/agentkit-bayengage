@@ -1,0 +1,45 @@
+{
+  "name": "VIP Customer Nurture",
+  "description": "Special treatment sequence for high-value customers",
+  "agent": "campaign_manager",
+  "difficulty": "intermediate",
+  "estimated_time": "20 minutes",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Identify VIP Customers",
+      "prompt": "Show me contacts with custom field 'total_orders' greater than 5 or 'lifetime_value' greater than 1000",
+      "notes": "Review the list to confirm VIP criteria"
+    },
+    {
+      "step": 2,
+      "title": "Create VIP Segment",
+      "prompt": "Create a segment called 'vip_customers' with these criteria",
+      "notes": "May need to do this manually in BayEngage dashboard"
+    },
+    {
+      "step": 3,
+      "title": "Create VIP Welcome Campaign",
+      "prompt": "Create campaign 'VIP Welcome' with subject 'Welcome to Our VIP Program!' using template vip_welcome for segment vip_customers",
+      "expected_tools": ["bayengage_create_campaign"]
+    },
+    {
+      "step": 4,
+      "title": "Send VIP Welcome",
+      "prompt": "Send the VIP Welcome campaign",
+      "notes": "Requires confirmation"
+    },
+    {
+      "step": 5,
+      "title": "Set Up VIP Drip Sequence",
+      "prompt": "Create VIP nurture drip campaign:\n- Day 3: Exclusive benefits template vip_benefits\n- Day 7: Early access template vip_early_access\n- Day 14: Personal shopper template vip_concierge\n- Monthly: VIP only deals template vip_deals",
+      "expected_tools": ["bayengage_create_drip_campaign"]
+    }
+  ],
+  "success_criteria": ["VIP segment created", "Welcome sent", "Nurture sequence active"],
+  "metadata": {
+    "category": "retention",
+    "use_case": "VIP customer nurturing",
+    "version": "1.0.0"
+  }
+}
