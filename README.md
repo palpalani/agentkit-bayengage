@@ -51,6 +51,31 @@ npm start
 
 The server will start at `http://localhost:3000`
 
+## 📚 Examples & Documentation
+
+**New to AgentKit?** Start with our comprehensive examples:
+
+- **[Example Library](./examples/README.md)** - Complete examples directory
+- **[Prompt Examples](./examples/prompts/)** - Natural language examples for beginners
+- **[API Examples](./examples/api/)** - cURL, TypeScript, Python integration
+- **[Workflow Scenarios](./examples/workflows/)** - Complete marketing automation flows
+- **[Postman Collection](./examples/api/postman-collection.json)** - Interactive API testing
+
+### Quick Example
+
+```bash
+curl -X POST http://localhost:3000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_input": "List all my campaign segments"
+  }'
+```
+
+**More examples:**
+- See [examples/prompts/01-getting-started.md](./examples/prompts/01-getting-started.md) for your first steps
+- Check [examples/api/chat-requests.sh](./examples/api/chat-requests.sh) for ready-to-use cURL commands
+- Explore [examples/workflows/](./examples/workflows/) for complete automation scenarios
+
 ## Usage
 
 ### REST API
