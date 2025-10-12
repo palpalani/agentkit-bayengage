@@ -1,5 +1,11 @@
 # BayEngage Agent Kit
 
+[![CI](https://github.com/yourusername/agentkit-bayengage/workflows/CI/badge.svg)](https://github.com/yourusername/agentkit-bayengage/actions/workflows/ci.yml)
+[![Security](https://github.com/yourusername/agentkit-bayengage/workflows/Security/badge.svg)](https://github.com/yourusername/agentkit-bayengage/actions/workflows/security.yml)
+[![Deploy](https://github.com/yourusername/agentkit-bayengage/workflows/Deploy/badge.svg)](https://github.com/yourusername/agentkit-bayengage/actions/workflows/deploy.yml)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
+
 A production-ready OpenAI Agent implementation for BayEngage email marketing automation, built with the `openai-agents-js` SDK.
 
 ## Features
