@@ -39,10 +39,12 @@ async function handleChatRequest(req: any, res: any): Promise<void> {
 
       if (!request.user_input) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          success: false,
-          error: 'user_input is required',
-        }));
+        res.end(
+          JSON.stringify({
+            success: false,
+            error: 'user_input is required',
+          })
+        );
         return;
       }
 
@@ -51,10 +53,12 @@ async function handleChatRequest(req: any, res: any): Promise<void> {
 
       if (!agent) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          success: false,
-          error: `Invalid agent type. Must be one of: ${Object.keys(agents).join(', ')}`,
-        }));
+        res.end(
+          JSON.stringify({
+            success: false,
+            error: `Invalid agent type. Must be one of: ${Object.keys(agents).join(', ')}`,
+          })
+        );
         return;
       }
 
@@ -77,7 +81,9 @@ async function handleChatRequest(req: any, res: any): Promise<void> {
         data: { response: finalResponse },
       });
 
-      console.log('Note: Agent execution is a placeholder. Implement actual agent.chat() or agent.run() based on @openai/agents SDK documentation.');
+      console.log(
+        'Note: Agent execution is a placeholder. Implement actual agent.chat() or agent.run() based on @openai/agents SDK documentation.'
+      );
 
       const duration = Date.now() - startTime;
       console.log(`Request completed in ${duration}ms`);
@@ -91,7 +97,6 @@ async function handleChatRequest(req: any, res: any): Promise<void> {
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(response, null, 2));
-
     } catch (error) {
       console.error('Error processing request:', error);
 
@@ -108,14 +113,16 @@ async function handleChatRequest(req: any, res: any): Promise<void> {
 
 async function handleHealthCheck(req: any, res: any): Promise<void> {
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    agents: Object.keys(agents),
-  }));
+  res.end(
+    JSON.stringify({
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      agents: Object.keys(agents),
+    })
+  );
 }
 
-function startServer(port: number = 3000): void {
+function startServer(port = 3000): void {
   const server = createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -130,9 +137,9 @@ function startServer(port: number = 3000): void {
     const url = new URL(req.url || '/', `http://${req.headers.host}`);
 
     if (url.pathname === '/api/chat') {
-      handleChatRequest(req, res);
+      void handleChatRequest(req, res);
     } else if (url.pathname === '/health' || url.pathname === '/') {
-      handleHealthCheck(req, res);
+      void handleHealthCheck(req, res);
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Not found' }));

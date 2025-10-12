@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { bayEngageAgent } from '../../src/agent.js';
 
 vi.mock('../../src/client.js', () => {

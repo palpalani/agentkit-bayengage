@@ -1,21 +1,28 @@
 import { tool } from '@openai/agents';
 import { z } from 'zod';
 import { getBayEngageClient } from '../client.js';
-import type { DripCampaign, ABTestCampaign, Newsletter } from '../types/index.js';
+import type { ABTestCampaign, DripCampaign, Newsletter } from '../types/index.js';
 
 export const createDripCampaignTool = tool({
   name: 'bayengage_create_drip_campaign',
-  description: 'Create an automated drip campaign that sends a series of emails over time based on a trigger event.',
+  description:
+    'Create an automated drip campaign that sends a series of emails over time based on a trigger event.',
   parameters: z.object({
     name: z.string().describe('Drip campaign name'),
     description: z.string().optional().describe('Campaign description'),
-    triggerType: z.enum(['signup', 'purchase', 'abandoned_cart', 'custom']).describe('Event that triggers the campaign'),
-    emails: z.array(z.object({
-      delay: z.number().describe('Delay amount before sending'),
-      delayUnit: z.enum(['minutes', 'hours', 'days']).describe('Delay time unit'),
-      templateId: z.string().describe('Template ID to use'),
-      subject: z.string().describe('Email subject line'),
-    })).describe('Series of emails in the drip sequence'),
+    triggerType: z
+      .enum(['signup', 'purchase', 'abandoned_cart', 'custom'])
+      .describe('Event that triggers the campaign'),
+    emails: z
+      .array(
+        z.object({
+          delay: z.number().describe('Delay amount before sending'),
+          delayUnit: z.enum(['minutes', 'hours', 'days']).describe('Delay time unit'),
+          templateId: z.string().describe('Template ID to use'),
+          subject: z.string().describe('Email subject line'),
+        })
+      )
+      .describe('Series of emails in the drip sequence'),
   }),
   async execute(input) {
     const client = getBayEngageClient();
@@ -24,7 +31,7 @@ export const createDripCampaignTool = tool({
       name: input.name,
       description: input.description,
       trigger_type: input.triggerType,
-      emails: input.emails.map(email => ({
+      emails: input.emails.map((email) => ({
         delay: email.delay,
         delay_unit: email.delayUnit,
         template_id: email.templateId,
@@ -56,7 +63,8 @@ export const createDripCampaignTool = tool({
 
 export const activateDripCampaignTool = tool({
   name: 'bayengage_activate_drip_campaign',
-  description: 'Activate a drip campaign to start automatically sending emails when the trigger event occurs.',
+  description:
+    'Activate a drip campaign to start automatically sending emails when the trigger event occurs.',
   parameters: z.object({
     dripCampaignId: z.string().describe('Drip campaign ID to activate'),
   }),
@@ -89,17 +97,29 @@ export const activateDripCampaignTool = tool({
 
 export const createABTestCampaignTool = tool({
   name: 'bayengage_create_ab_test',
-  description: 'Create an A/B test campaign to test different variations and automatically send the winner.',
+  description:
+    'Create an A/B test campaign to test different variations and automatically send the winner.',
   parameters: z.object({
     name: z.string().describe('A/B test campaign name'),
     testType: z.enum(['subject', 'content', 'send_time']).describe('What to test'),
-    variants: z.array(z.object({
-      name: z.string().describe('Variant name (e.g., "Variant A")'),
-      subject: z.string().optional().describe('Subject line for this variant'),
-      templateId: z.string().optional().describe('Template ID for this variant'),
-      percentage: z.number().min(0).max(100).describe('Percentage of audience for this variant'),
-    })).min(2).describe('Test variants (minimum 2)'),
-    winnerMetric: z.enum(['open_rate', 'click_rate', 'conversion_rate']).describe('Metric to determine winner'),
+    variants: z
+      .array(
+        z.object({
+          name: z.string().describe('Variant name (e.g., "Variant A")'),
+          subject: z.string().optional().describe('Subject line for this variant'),
+          templateId: z.string().optional().describe('Template ID for this variant'),
+          percentage: z
+            .number()
+            .min(0)
+            .max(100)
+            .describe('Percentage of audience for this variant'),
+        })
+      )
+      .min(2)
+      .describe('Test variants (minimum 2)'),
+    winnerMetric: z
+      .enum(['open_rate', 'click_rate', 'conversion_rate'])
+      .describe('Metric to determine winner'),
     testDuration: z.number().describe('Test duration in hours before sending winner'),
     segmentIds: z.array(z.string()).describe('Segments to send test to'),
   }),
@@ -117,7 +137,7 @@ export const createABTestCampaignTool = tool({
     const response = await client.post<ABTestCampaign>('/campaigns/ab-tests', {
       name: input.name,
       test_type: input.testType,
-      variants: input.variants.map(v => ({
+      variants: input.variants.map((v) => ({
         name: v.name,
         subject: v.subject,
         template_id: v.templateId,
@@ -152,7 +172,8 @@ export const createABTestCampaignTool = tool({
 
 export const startABTestTool = tool({
   name: 'bayengage_start_ab_test',
-  description: 'Start an A/B test campaign. The test will run for the specified duration, then send the winner to remaining contacts.',
+  description:
+    'Start an A/B test campaign. The test will run for the specified duration, then send the winner to remaining contacts.',
   parameters: z.object({
     abTestId: z.string().describe('A/B test campaign ID'),
     confirmStart: z.boolean().default(false).describe('Explicit confirmation to start test'),
@@ -197,7 +218,10 @@ export const createNewsletterTool = tool({
   parameters: z.object({
     name: z.string().describe('Newsletter name'),
     frequency: z.enum(['daily', 'weekly', 'monthly']).describe('Send frequency'),
-    sendDay: z.string().optional().describe('Day to send (for weekly/monthly, e.g., "Monday" or "1")'),
+    sendDay: z
+      .string()
+      .optional()
+      .describe('Day to send (for weekly/monthly, e.g., "Monday" or "1")'),
     sendTime: z.string().describe('Time to send in HH:MM format (24-hour)'),
     templateId: z.string().describe('Template ID to use'),
     segmentIds: z.array(z.string()).describe('Segments to send to'),

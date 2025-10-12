@@ -5,7 +5,8 @@ import type { Campaign, CampaignStats, Segment } from '../types/index.js';
 
 export const listSegmentsTool = tool({
   name: 'bayengage_list_segments',
-  description: 'List all available segments in BayEngage. Segments are groups of contacts based on specific criteria.',
+  description:
+    'List all available segments in BayEngage. Segments are groups of contacts based on specific criteria.',
   parameters: z.object({
     limit: z.number().optional().default(50).describe('Maximum number of segments to return'),
     offset: z.number().optional().default(0).describe('Number of segments to skip'),
@@ -36,7 +37,8 @@ export const listSegmentsTool = tool({
 
 export const createCampaignTool = tool({
   name: 'bayengage_create_campaign',
-  description: 'Create a new email campaign draft in BayEngage. This does NOT send the campaign - use send_campaign for that.',
+  description:
+    'Create a new email campaign draft in BayEngage. This does NOT send the campaign - use send_campaign for that.',
   parameters: z.object({
     name: z.string().describe('Campaign name for internal reference'),
     subject: z.string().describe('Email subject line'),
@@ -98,18 +100,28 @@ export const createCampaignTool = tool({
 
 export const sendCampaignTool = tool({
   name: 'bayengage_send_campaign',
-  description: 'Send or schedule a campaign. IMPORTANT: This will send real emails. Always confirm with user before sending.',
+  description:
+    'Send or schedule a campaign. IMPORTANT: This will send real emails. Always confirm with user before sending.',
   parameters: z.object({
     campaignId: z.string().describe('Campaign ID to send'),
-    scheduledAt: z.string().optional().describe('ISO 8601 timestamp to schedule send (optional, sends immediately if not provided)'),
-    confirmSend: z.boolean().default(false).describe('Explicit confirmation to send campaign (must be true)'),
+    scheduledAt: z
+      .string()
+      .optional()
+      .describe(
+        'ISO 8601 timestamp to schedule send (optional, sends immediately if not provided)'
+      ),
+    confirmSend: z
+      .boolean()
+      .default(false)
+      .describe('Explicit confirmation to send campaign (must be true)'),
   }),
   async execute(input) {
     if (!input.confirmSend) {
       return {
         success: false,
         error: 'Campaign send not confirmed. Set confirmSend to true to proceed.',
-        warning: 'SAFETY: Campaign sending requires explicit confirmation to prevent accidental sends.',
+        warning:
+          'SAFETY: Campaign sending requires explicit confirmation to prevent accidental sends.',
       };
     }
 
@@ -149,7 +161,8 @@ export const sendCampaignTool = tool({
 
 export const getCampaignStatsTool = tool({
   name: 'bayengage_get_campaign_stats',
-  description: 'Retrieve analytics and statistics for a sent campaign including opens, clicks, bounces, and conversions.',
+  description:
+    'Retrieve analytics and statistics for a sent campaign including opens, clicks, bounces, and conversions.',
   parameters: z.object({
     campaignId: z.string().describe('Campaign ID to get statistics for'),
   }),
@@ -194,7 +207,10 @@ export const listCampaignsTool = tool({
   name: 'bayengage_list_campaigns',
   description: 'List all campaigns in BayEngage with optional filtering by status.',
   parameters: z.object({
-    status: z.enum(['draft', 'scheduled', 'sending', 'sent', 'paused', 'cancelled']).optional().describe('Filter by campaign status'),
+    status: z
+      .enum(['draft', 'scheduled', 'sending', 'sent', 'paused', 'cancelled'])
+      .optional()
+      .describe('Filter by campaign status'),
     limit: z.number().optional().default(50).describe('Maximum number of campaigns to return'),
     offset: z.number().optional().default(0).describe('Number of campaigns to skip'),
   }),
@@ -227,7 +243,8 @@ export const listCampaignsTool = tool({
 
 export const deleteCampaignTool = tool({
   name: 'bayengage_delete_campaign',
-  description: 'Delete a campaign. Only draft campaigns can be deleted. Sent campaigns cannot be removed.',
+  description:
+    'Delete a campaign. Only draft campaigns can be deleted. Sent campaigns cannot be removed.',
   parameters: z.object({
     campaignId: z.string().describe('Campaign ID to delete'),
   }),
