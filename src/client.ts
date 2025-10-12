@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
-import type { BayEngageConfig, APIResponse } from './types/index.js';
+import type { APIResponse, BayEngageConfig } from './types/index.js';
 
 export class BayEngageClient {
   private client: AxiosInstance;
@@ -20,7 +20,7 @@ export class BayEngageClient {
       timeout: this.config.timeout ?? 30000,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.config.apiKey}`,
+        Authorization: `Bearer ${this.config.apiKey}`,
         'X-API-Key': this.config.apiKey,
       },
     });
@@ -78,7 +78,7 @@ export class BayEngageClient {
   }
 
   private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private generateRequestId(): string {
@@ -175,15 +175,27 @@ export class BayEngageClient {
     return this.request<T>('GET', endpoint, undefined, config);
   }
 
-  async post<T = any>(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
+  async post<T = any>(
+    endpoint: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): Promise<APIResponse<T>> {
     return this.request<T>('POST', endpoint, data, config);
   }
 
-  async put<T = any>(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
+  async put<T = any>(
+    endpoint: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): Promise<APIResponse<T>> {
     return this.request<T>('PUT', endpoint, data, config);
   }
 
-  async patch<T = any>(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
+  async patch<T = any>(
+    endpoint: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): Promise<APIResponse<T>> {
     return this.request<T>('PATCH', endpoint, data, config);
   }
 

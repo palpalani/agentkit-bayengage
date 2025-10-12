@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { getBayEngageClient, resetClient } from '../../src/client.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { getBayEngageClient } from '../../src/client.js';
 import { bayEngageAgent } from '../../src/agent.js';
 
 vi.mock('../../src/client.js', () => {

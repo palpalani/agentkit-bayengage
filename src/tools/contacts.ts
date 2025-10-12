@@ -1,11 +1,12 @@
 import { tool } from '@openai/agents';
 import { z } from 'zod';
 import { getBayEngageClient } from '../client.js';
-import type { Contact, APIResponse } from '../types/index.js';
+import type { Contact } from '../types/index.js';
 
 export const createContactTool = tool({
   name: 'bayengage_create_contact',
-  description: 'Create a new contact in BayEngage. Use this to add subscribers to your email list with their profile information.',
+  description:
+    'Create a new contact in BayEngage. Use this to add subscribers to your email list with their profile information.',
   parameters: z.object({
     email: z.string().email().describe('Contact email address (required)'),
     firstName: z.string().optional().describe('Contact first name'),
@@ -53,7 +54,8 @@ export const createContactTool = tool({
 
 export const updateContactTool = tool({
   name: 'bayengage_update_contact',
-  description: 'Update an existing contact in BayEngage by email or contact ID. Use this to modify contact information or subscription status.',
+  description:
+    'Update an existing contact in BayEngage by email or contact ID. Use this to modify contact information or subscription status.',
   parameters: z.object({
     contactId: z.string().optional().describe('Contact ID to update'),
     email: z.string().email().optional().describe('Contact email to lookup and update'),
@@ -62,7 +64,10 @@ export const updateContactTool = tool({
     phone: z.string().optional().describe('Updated phone number'),
     tags: z.array(z.string()).optional().describe('Updated tags'),
     customFields: z.record(z.any()).optional().describe('Updated custom fields'),
-    subscriptionStatus: z.enum(['subscribed', 'unsubscribed', 'pending']).optional().describe('Updated subscription status'),
+    subscriptionStatus: z
+      .enum(['subscribed', 'unsubscribed', 'pending'])
+      .optional()
+      .describe('Updated subscription status'),
   }),
   async execute(input) {
     if (!input.contactId && !input.email) {
@@ -161,7 +166,8 @@ export const getContactTool = tool({
 
 export const deleteContactTool = tool({
   name: 'bayengage_delete_contact',
-  description: 'Permanently delete a contact from BayEngage. Use with caution as this action cannot be undone.',
+  description:
+    'Permanently delete a contact from BayEngage. Use with caution as this action cannot be undone.',
   parameters: z.object({
     contactId: z.string().optional().describe('Contact ID to delete'),
     email: z.string().email().optional().describe('Contact email to delete'),

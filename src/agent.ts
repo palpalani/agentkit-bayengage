@@ -1,33 +1,33 @@
 import { Agent } from '@openai/agents';
 import {
   createContactTool,
-  updateContactTool,
-  getContactTool,
   deleteContactTool,
+  getContactTool,
+  updateContactTool,
 } from './tools/contacts.js';
 import {
-  listSegmentsTool,
   createCampaignTool,
-  sendCampaignTool,
+  deleteCampaignTool,
   getCampaignStatsTool,
   listCampaignsTool,
-  deleteCampaignTool,
+  listSegmentsTool,
+  sendCampaignTool,
 } from './tools/campaigns.js';
 import {
-  listTemplatesTool,
-  getTemplateTool,
   createTemplateTool,
-  updateTemplateTool,
   deleteTemplateTool,
+  getTemplateTool,
+  listTemplatesTool,
+  updateTemplateTool,
 } from './tools/templates.js';
 import {
-  createDripCampaignTool,
   activateDripCampaignTool,
   createABTestCampaignTool,
-  startABTestTool,
+  createDripCampaignTool,
   createNewsletterTool,
-  pauseNewsletterTool,
   listDripCampaignsTool,
+  pauseNewsletterTool,
+  startABTestTool,
 } from './tools/automation.js';
 
 export const bayEngageAgent = new Agent({
@@ -204,9 +204,5 @@ You analyze:
 - Use percentages and comparisons for clarity
 - Always provide actionable recommendations
 - Explain technical terms in plain language`,
-  tools: [
-    getCampaignStatsTool,
-    listCampaignsTool,
-    listSegmentsTool,
-  ],
+  tools: [getCampaignStatsTool, listCampaignsTool, listSegmentsTool],
 });

@@ -9,6 +9,7 @@ This is a **production-ready OpenAI AgentKit integration for BayEngage**, provid
 ## Development Commands
 
 ### Setup
+
 ```bash
 npm install
 cp .env.example .env
@@ -16,12 +17,14 @@ cp .env.example .env
 ```
 
 ### Running the Server
+
 ```bash
 npm start          # Start production server
 npm run dev        # Start with hot reload
 ```
 
 ### Testing
+
 ```bash
 npm test                # Run all tests
 npm run test:watch      # Watch mode
@@ -29,6 +32,7 @@ npm run test:coverage   # With coverage report
 ```
 
 ### Building
+
 ```bash
 npm run build      # Compile TypeScript
 npm run type-check # Type check without build
@@ -163,6 +167,7 @@ npm run test:coverage      # Generate coverage report
 ### Environment Variables
 
 Required in `.env`:
+
 - `BAYENGAGE_API_KEY`: BayEngage API key
 - `BAYENGAGE_API_SECRET`: BayEngage API secret (optional)
 - `BAYENGAGE_API_URL`: API base URL (default: https://api.bayengage.com/v2)
@@ -172,6 +177,7 @@ Required in `.env`:
 ### Client Configuration
 
 The `BayEngageClient` class (`src/client.ts`) supports:
+
 - Custom timeout (default: 30s)
 - Custom retry count (default: 3)
 - Automatic retry with exponential backoff
@@ -184,6 +190,7 @@ The `BayEngageClient` class (`src/client.ts`) supports:
 Main agent interaction endpoint.
 
 **Request:**
+
 ```json
 {
   "user_input": "List my campaign segments",
@@ -193,11 +200,14 @@ Main agent interaction endpoint.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
   "response": "Agent's text response",
-  "trace": [/* execution trace */],
+  "trace": [
+    /* execution trace */
+  ],
   "thread_id": "thread_id_for_continuation"
 }
 ```
@@ -209,16 +219,19 @@ Health check endpoint.
 ## Deployment
 
 ### Vercel
+
 - Compatible out of the box
 - Set environment variables in Vercel dashboard
 - Deploy with `vercel` CLI
 
 ### AWS Lambda
+
 - Build with `npm run build`
 - Package `dist/` directory
 - Set environment variables in Lambda console
 
 ### Docker
+
 - Dockerfile ready (see README)
 - Build: `docker build -t bayengage-agent .`
 - Run: `docker run -p 3000:3000 --env-file .env bayengage-agent`
@@ -231,7 +244,7 @@ Maintain conversation context across requests:
 
 ```typescript
 const result1 = await fetch('/api/chat', {
-  body: JSON.stringify({ user_input: 'Create a campaign' })
+  body: JSON.stringify({ user_input: 'Create a campaign' }),
 });
 
 const { thread_id } = await result1.json();
@@ -240,14 +253,15 @@ const { thread_id } = await result1.json();
 await fetch('/api/chat', {
   body: JSON.stringify({
     user_input: 'Change the subject line',
-    thread_id
-  })
+    thread_id,
+  }),
 });
 ```
 
 ### Agent Selection
 
 Choose appropriate agent for the task:
+
 - `default`: General queries, mixed operations
 - `campaign_manager`: Campaign creation, sending, optimization
 - `data_analyst`: Performance analysis, metrics, insights
@@ -255,18 +269,22 @@ Choose appropriate agent for the task:
 ## Troubleshooting
 
 ### Import Issues
+
 - Ensure all imports use `.js` extension (required for ESM)
 - Use `import type` for type-only imports
 
 ### Type Errors
+
 - Run `npm run type-check` to see all type errors
 - Check `tsconfig.json` for strict mode settings
 
 ### Test Failures
+
 - Ensure mocks are properly set up in test files
 - Clear mocks with `vi.clearAllMocks()` in `beforeEach`
 
 ### API Client Issues
+
 - Check environment variables are set
 - Verify API credentials are valid
 - Check network connectivity
