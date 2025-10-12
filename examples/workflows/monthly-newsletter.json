@@ -1,0 +1,33 @@
+{
+  "name": "Monthly Newsletter Workflow",
+  "description": "Send recurring monthly newsletter",
+  "agent": "campaign_manager",
+  "difficulty": "beginner",
+  "estimated_time": "10 minutes",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Create Newsletter Campaign",
+      "prompt": "Create campaign 'Monthly Newsletter - January 2025' with subject 'This Month's Top Stories' using template newsletter_v2 for segment newsletter_subscribers from Editorial Team <news@company.com>",
+      "expected_tools": ["bayengage_create_campaign"]
+    },
+    {
+      "step": 2,
+      "title": "Schedule Newsletter",
+      "prompt": "Schedule this campaign for first Tuesday of next month at 10 AM EST",
+      "notes": "Adjust date based on current date"
+    },
+    {
+      "step": 3,
+      "title": "Set Up Recurring Automation",
+      "prompt": "Create newsletter automation to send monthly on first Tuesday at 10 AM using template newsletter_v2 to segment newsletter_subscribers",
+      "expected_tools": ["bayengage_create_newsletter"]
+    }
+  ],
+  "success_criteria": ["Campaign scheduled", "Recurring automation set up", "Newsletter sending monthly"],
+  "metadata": {
+    "category": "content",
+    "use_case": "Recurring newsletter",
+    "version": "1.0.0"
+  }
+}

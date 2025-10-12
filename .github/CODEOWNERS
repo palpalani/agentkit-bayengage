@@ -1,0 +1,28 @@
+# CODEOWNERS
+# This file defines who will be automatically requested for review
+# when a pull request modifies certain files in the repository
+
+# Default owners for everything in the repo
+*       @palani
+
+# Documentation
+*.md    @palani
+/docs/  @palani
+
+# GitHub Actions
+/.github/       @palani
+
+# Source code
+/src/           @palani
+
+# Tests
+/tests/         @palani
+
+# Configuration files
+*.json          @palani
+*.yml           @palani
+*.yaml          @palani
+tsconfig.json   @palani
+
+# Tools
+/src/tools/     @palani

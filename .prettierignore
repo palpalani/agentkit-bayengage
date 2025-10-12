@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+*.js
+*.d.ts
+*.d.ts.map
+coverage/
+
+# Keep config files
+!*.config.js
+!eslint.config.js
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+
+# GitHub
+.github/
+
+# Misc
+*.min.js
+*.min.css
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

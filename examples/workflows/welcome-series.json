@@ -1,0 +1,102 @@
+{
+  "name": "Welcome Series Workflow",
+  "description": "3-email welcome sequence for new subscribers",
+  "agent": "campaign_manager",
+  "difficulty": "beginner",
+  "estimated_time": "10 minutes",
+  "prerequisites": {
+    "templates": ["welcome_1", "tour_1", "offer_1"],
+    "segments": ["new_subscribers"],
+    "notes": "Ensure templates exist before running this workflow"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Create Drip Campaign",
+      "action": "create_drip_campaign",
+      "prompt": "Create a welcome drip campaign named 'New Subscriber Welcome Series' triggered on contact.created with 3 emails:\n1. Welcome email immediately using template welcome_1 with subject 'Welcome to Our Community!'\n2. Product tour after 2 days using template tour_1 with subject 'Get Started in 5 Minutes'\n3. Special offer after 5 days using template offer_1 with subject 'Special Offer Just for You'",
+      "expected_tools": ["bayengage_create_drip_campaign"],
+      "expected_output": {
+        "drip_campaign_id": "drip_xyz123",
+        "status": "draft",
+        "emails_count": 3
+      },
+      "notes": "Campaign is created as DRAFT by default"
+    },
+    {
+      "step": 2,
+      "title": "Review Drip Campaign",
+      "action": "review_campaign",
+      "prompt": "Show me details of the drip campaign we just created",
+      "expected_tools": ["bayengage_list_drip_campaigns"],
+      "expected_output": {
+        "campaign_details": "Full drip campaign configuration"
+      },
+      "notes": "Verify all emails are configured correctly before activating"
+    },
+    {
+      "step": 3,
+      "title": "Activate Drip Campaign",
+      "action": "activate_campaign",
+      "prompt": "Activate the welcome series drip campaign",
+      "expected_tools": ["bayengage_activate_drip_campaign"],
+      "expected_output": {
+        "status": "active",
+        "message": "Campaign activated successfully"
+      },
+      "notes": "This will require confirmation: 'yes, activate it'"
+    },
+    {
+      "step": 4,
+      "title": "Confirm Activation",
+      "action": "confirm",
+      "prompt": "Yes, activate it",
+      "expected_output": {
+        "status": "active",
+        "message": "Drip campaign is now active"
+      },
+      "notes": "New subscribers will automatically receive the email sequence"
+    },
+    {
+      "step": 5,
+      "title": "Monitor Performance (After 7+ Days)",
+      "action": "check_performance",
+      "prompt": "How is the welcome series drip campaign performing?",
+      "expected_tools": ["bayengage_list_drip_campaigns"],
+      "expected_output": {
+        "active_contacts": 234,
+        "completed": 156,
+        "performance_metrics": "Open rates, click rates per email"
+      },
+      "notes": "Check performance after campaign has been running for at least 7 days"
+    }
+  ],
+  "success_criteria": [
+    "Drip campaign created with 3 emails",
+    "Campaign activated successfully",
+    "New subscribers receive automated sequence"
+  ],
+  "common_issues": [
+    {
+      "issue": "Templates not found",
+      "solution": "Create templates first using 'list my templates' to verify they exist"
+    },
+    {
+      "issue": "Activation fails",
+      "solution": "Ensure all template IDs are valid and campaign is in draft status"
+    }
+  ],
+  "next_steps": [
+    "Monitor open rates for each email",
+    "A/B test subject lines if open rates are below 40%",
+    "Adjust timing between emails based on engagement",
+    "Create follow-up sequence for engaged subscribers"
+  ],
+  "metadata": {
+    "category": "onboarding",
+    "use_case": "New subscriber welcome automation",
+    "author": "BayEngage Team",
+    "version": "1.0.0",
+    "last_updated": "2025-01-15"
+  }
+}

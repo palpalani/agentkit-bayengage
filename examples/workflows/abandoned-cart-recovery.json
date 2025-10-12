@@ -1,0 +1,38 @@
+{
+  "name": "Abandoned Cart Recovery",
+  "description": "3-email sequence to recover abandoned carts",
+  "agent": "campaign_manager",
+  "difficulty": "intermediate",
+  "estimated_time": "15 minutes",
+  "prerequisites": {
+    "templates": ["cart_reminder_1", "cart_discount", "cart_final"],
+    "trigger": "cart.abandoned",
+    "notes": "Requires e-commerce integration"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Create Abandoned Cart Drip",
+      "prompt": "Create abandoned cart drip campaign triggered on cart.abandoned:\n- 1 hour: Reminder template cart_reminder_1 subject '{{first_name}}, You Left Something Behind'\n- 24 hours: Discount template cart_discount subject 'Save 10% on Your Cart'\n- 72 hours: Final template cart_final subject 'Last Chance - Your Cart Expires Soon'",
+      "expected_tools": ["bayengage_create_drip_campaign"]
+    },
+    {
+      "step": 2,
+      "title": "Activate Campaign",
+      "prompt": "Activate the abandoned cart drip campaign",
+      "expected_tools": ["bayengage_activate_drip_campaign"]
+    },
+    {
+      "step": 3,
+      "title": "Monitor Recovery Rate",
+      "prompt": "Show me recovery rate for abandoned cart campaign",
+      "notes": "Check after 7+ days for meaningful data"
+    }
+  ],
+  "success_criteria": ["Campaign activated", "Carts being recovered", "ROI positive"],
+  "metadata": {
+    "category": "e-commerce",
+    "use_case": "Cart abandonment recovery",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "A/B Test Subject Lines",
+  "description": "Test two subject line variants to optimize opens",
+  "agent": "campaign_manager",
+  "difficulty": "beginner",
+  "estimated_time": "5 minutes",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Create A/B Test",
+      "prompt": "Create an A/B test for subject lines:\nVariant A: 'Last Chance - Sale Ends Tonight!'\nVariant B: 'Don't Miss Out: Final Hours of Sale'\nTest 20% of audience, send winner based on open rate after 4 hours\nSend to segment active_customers",
+      "expected_tools": ["bayengage_create_ab_test"]
+    },
+    {
+      "step": 2,
+      "title": "Start Test",
+      "prompt": "Start the A/B test",
+      "expected_tools": ["bayengage_start_ab_test"]
+    },
+    {
+      "step": 3,
+      "title": "Check Results (After 4+ Hours)",
+      "prompt": "Show me results for the A/B test",
+      "notes": "Winner automatically sent to remaining 80% after test period"
+    }
+  ],
+  "success_criteria": ["Test created and started", "Winner determined", "Winner sent to full list"],
+  "metadata": {
+    "category": "optimization",
+    "use_case": "Subject line optimization",
+    "version": "1.0.0"
+  }
+}

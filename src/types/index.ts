@@ -76,7 +76,7 @@ export interface CampaignStats {
   bounceRate: number;
   unsubscribeRate: number;
   revenue?: number;
-  topLinks?: Array<{ url: string; clicks: number }>;
+  topLinks?: { url: string; clicks: number }[];
 }
 
 export interface Template {
@@ -95,12 +95,12 @@ export interface DripCampaign {
   name: string;
   description?: string;
   triggerType: 'signup' | 'purchase' | 'abandoned_cart' | 'custom';
-  emails: Array<{
+  emails: {
     delay: number;
     delayUnit: 'minutes' | 'hours' | 'days';
     templateId: string;
     subject: string;
-  }>;
+  }[];
   status?: 'active' | 'paused' | 'draft';
   createdAt?: string;
   updatedAt?: string;
@@ -110,12 +110,12 @@ export interface ABTestCampaign {
   id?: string;
   name: string;
   testType: 'subject' | 'content' | 'send_time';
-  variants: Array<{
+  variants: {
     name: string;
     subject?: string;
     templateId?: string;
     percentage: number;
-  }>;
+  }[];
   winnerMetric: 'open_rate' | 'click_rate' | 'conversion_rate';
   testDuration: number;
   segmentIds: string[];
