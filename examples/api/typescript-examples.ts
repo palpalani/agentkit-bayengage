@@ -30,7 +30,7 @@ interface ChatResponse {
 
 class BayEngageAgentClient {
   private baseURL: string;
-  private threadId?: string;
+  private threadId: string | undefined;
 
   constructor(baseURL: string = BASE_URL) {
     this.baseURL = baseURL;
@@ -43,8 +43,8 @@ class BayEngageAgentClient {
     try {
       const request: ChatRequest = {
         user_input: prompt,
-        agent,
-        thread_id: this.threadId,
+        ...(agent && { agent }),
+        ...(this.threadId && { thread_id: this.threadId }),
       };
 
       const response = await axios.post<ChatResponse>(`${this.baseURL}/api/chat`, request);
@@ -160,9 +160,7 @@ async function example4_contactManagement() {
   console.log('Get:', getResponse.response);
 
   // Update contact
-  const updateResponse = await client.chat(
-    'Update contact demo@example.com with phone 555-1234'
-  );
+  const updateResponse = await client.chat('Update contact demo@example.com with phone 555-1234');
   console.log('Update:', updateResponse.response);
   console.log();
 }
@@ -283,4 +281,5 @@ if (require.main === module) {
 }
 
 // Export for use in other modules
-export { BayEngageAgentClient, ChatRequest, ChatResponse };
+export { BayEngageAgentClient };
+export type { ChatRequest, ChatResponse };
