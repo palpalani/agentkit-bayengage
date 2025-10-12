@@ -1,19 +1,55 @@
 {
   "name": "agentkit-bayengage",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Production-ready OpenAI Agent implementation for BayEngage email marketing automation",
+  "type": "module",
+  "main": "dist/agent.js",
+  "types": "dist/agent.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/agent.js",
+      "types": "./dist/agent.d.ts"
+    },
+    "./client": {
+      "import": "./dist/client.js",
+      "types": "./dist/client.d.ts"
+    }
   },
-  "keywords": [],
+  "scripts": {
+    "start": "node --loader ts-node/esm src/server.ts",
+    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "bayengage",
+    "email-marketing",
+    "openai",
+    "agents",
+    "ai",
+    "automation",
+    "marketing-automation"
+  ],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@openai/agents": "^0.1.9",
     "axios": "^1.12.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^3.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "zod": "^3.25.76"
+    "vitest": "^3.0.5"
   }
 }

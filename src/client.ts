@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
+import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import type { BayEngageConfig, APIResponse } from './types/index.js';
 
 export class BayEngageClient {
@@ -12,11 +13,11 @@ export class BayEngageClient {
       maxRetries: 3,
       ...config,
     };
-    this.maxRetries = this.config.maxRetries || 3;
+    this.maxRetries = this.config.maxRetries ?? 3;
 
     this.client = axios.create({
       baseURL: this.config.baseURL,
-      timeout: this.config.timeout,
+      timeout: this.config.timeout ?? 30000,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.config.apiKey}`,
@@ -197,17 +198,22 @@ export function getBayEngageClient(): BayEngageClient {
   if (!clientInstance) {
     const apiKey = process.env.BAYENGAGE_API_KEY;
     const apiSecret = process.env.BAYENGAGE_API_SECRET;
-    const baseURL = process.env.BAYENGAGE_API_URL || 'https://api.bayengage.com/v2';
+    const baseURL = process.env.BAYENGAGE_API_URL ?? 'https://api.bayengage.com/v2';
 
     if (!apiKey) {
       throw new Error('BAYENGAGE_API_KEY environment variable is required');
     }
 
-    clientInstance = new BayEngageClient({
+    const config: BayEngageConfig = {
       apiKey,
-      apiSecret,
       baseURL,
-    });
+    };
+
+    if (apiSecret) {
+      config.apiSecret = apiSecret;
+    }
+
+    clientInstance = new BayEngageClient(config);
   }
 
   return clientInstance;

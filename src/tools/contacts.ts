@@ -42,9 +42,9 @@ export const createContactTool = tool({
       contact: {
         id: response.data?.id,
         email: response.data?.email,
-        firstName: response.data?.first_name,
-        lastName: response.data?.last_name,
-        subscriptionStatus: response.data?.subscription_status,
+        firstName: response.data?.firstName,
+        lastName: response.data?.lastName,
+        subscriptionStatus: response.data?.subscriptionStatus,
       },
       message: `Contact ${input.email} created successfully`,
     };
@@ -101,9 +101,9 @@ export const updateContactTool = tool({
       contact: {
         id: response.data?.id,
         email: response.data?.email,
-        firstName: response.data?.first_name,
-        lastName: response.data?.last_name,
-        subscriptionStatus: response.data?.subscription_status,
+        firstName: response.data?.firstName,
+        lastName: response.data?.lastName,
+        subscriptionStatus: response.data?.subscriptionStatus,
       },
       message: 'Contact updated successfully',
     };
@@ -146,14 +146,14 @@ export const getContactTool = tool({
       contact: {
         id: response.data?.id,
         email: response.data?.email,
-        firstName: response.data?.first_name,
-        lastName: response.data?.last_name,
+        firstName: response.data?.firstName,
+        lastName: response.data?.lastName,
         phone: response.data?.phone,
         tags: response.data?.tags,
-        subscriptionStatus: response.data?.subscription_status,
-        customFields: response.data?.custom_fields,
-        createdAt: response.data?.created_at,
-        updatedAt: response.data?.updated_at,
+        subscriptionStatus: response.data?.subscriptionStatus,
+        customFields: response.data?.customFields,
+        createdAt: response.data?.createdAt,
+        updatedAt: response.data?.updatedAt,
       },
     };
   },
