@@ -1,0 +1,19 @@
+{
+  "name": "agentkit-bayengage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openai/agents": "^0.1.9",
+    "axios": "^1.12.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "zod": "^3.25.76"
+  }
+}
