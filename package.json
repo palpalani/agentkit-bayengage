@@ -48,7 +48,7 @@
   "dependencies": {
     "@openai/agents": "^0.4.15",
     "axios": "^1.13.5",
-    "zod": "^3.25.40"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
