@@ -46,7 +46,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@openai/agents": "^0.6.0",
+    "@openai/agents": "^0.7.2",
     "axios": "^1.13.6",
     "zod": "^3.25.40"
   },
